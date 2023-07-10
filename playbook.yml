@@ -1,0 +1,12 @@
+---
+- name: Main playbook
+  hosts: all
+  become: true
+  tasks:
+    - name: Install pip
+      import_role:
+        name: geerlingguy.pip
+    
+    - name: Install Docker module for pip
+      import_role:
+        name: geerlingguy.docker
