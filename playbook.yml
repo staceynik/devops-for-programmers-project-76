@@ -1,12 +1,64 @@
----
 - name: Main playbook
   hosts: all
   become: true
+
+  vars_files:
+    - group_vars/webservers/vault.yml
+    - group_vars/webservers/vars.yml
+
   tasks:
     - name: Install pip
       import_role:
         name: geerlingguy.pip
-    
+      tags:
+        - install_pip
+
     - name: Install Docker module for pip
       import_role:
         name: geerlingguy.docker
+      tags:
+        - install_docker
+
+    - name: Create ansible_project directory
+      file:
+        path: /root/ansible_project
+        state: directory
+
+    - name: Copy .env file to ubuntu-1
+      copy:
+        src: /home/karpov/devops-for-programmers-project-76/templates/.env
+        dest: /root/ansible_project/.env
+        owner: root
+        group: root
+        mode: 0644
+      when: inventory_hostname == 'ubuntu-1'
+      tags:
+        - copy_env_file_ubuntu1
+
+    - name: Create ansible_project directory
+      file:
+        path: /root/ansible_project
+        state: directory
+
+    - name: Copy .env file to ubuntu-2
+      copy:
+        src: /home/karpov/devops-for-programmers-project-76/templates/.env
+        dest: /root/ansible_project/.env
+        owner: root
+        group: root
+        mode: 0644
+      when: inventory_hostname == 'ubuntu-2'
+      tags:
+        - copy_env_file_ubuntu2
+
+    - name: Configure Redmine environment
+      lineinfile:
+        path: /root/ansible_project/.env
+        line: "{{ item.key }}={{ item.value }}"
+        state: present
+      with_dict: "{{ redmine_env_variables }}"
+      when: inventory_hostname in groups['webservers']
+      tags:
+        - configure_redmine_environment
+
+

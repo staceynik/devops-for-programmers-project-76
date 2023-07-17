@@ -49,9 +49,15 @@ To prepare and deploy the project to the servers, run the following command:
 
 ```make deploy```
 
+## Deployed Application
+
+You can find the deployed application at the following link:
+
+- [Redmine](http://www.staceynik.store/)
+
 ## License
 
-
+This project is licensed under the MIT License.
 
 
 

@@ -1,0 +1,7 @@
+redmine_env_variables:
+  REDMINE_DB_USERNAME: "doadmin"
+  REDMINE_DB_PASSWORD: "{{ db_password }}"
+  REDMINE_DB_HOST: "db-postgresql-do-user-14240277-0.b.db.ondigitalocean.com"
+  REDMINE_DB_PORT: "25060"
+  REDMINE_DB_DATABASE: "defaultdb"
+  REDMINE_DB_SSLMODE: "require"
