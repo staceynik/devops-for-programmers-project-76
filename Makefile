@@ -1,7 +1,8 @@
 deploy:
 	ansible-playbook -i inventory.ini playbook.yml
 requirements:
-	pip3 install -r requirements.txt
+	ansible-galaxy install -r requirements.yml --force
+
 encrypt_vault:
 	ansible-vault encrypt $(PWD)/group_vars/webservers/vault.yml
 

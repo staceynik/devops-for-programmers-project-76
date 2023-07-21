@@ -10,7 +10,8 @@
 
 To get started with this project, make sure you have the following prerequisites installed on your system:
 
-- [Python 3.x](https://www.python.org/downloads/) 
+- [Python 3.x](https://www.python.org/downloads/)
+- [Pipinstallation](https://pip.pypa.io/en/stable/installing/) 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Make](https://www.gnu.org/software/make/)
 

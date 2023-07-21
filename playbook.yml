@@ -24,32 +24,86 @@
         path: /root/ansible_project
         state: directory
 
-    - name: Copy .env file to ubuntu-1
+    - name: Copy .env file to ansible_project directory
       copy:
-        src: /home/karpov/devops-for-programmers-project-76/templates/.env
+        src: templates/.env
         dest: /root/ansible_project/.env
         owner: root
         group: root
         mode: 0644
-      when: inventory_hostname == 'ubuntu-1'
+      when: inventory_hostname in groups['webservers']
       tags:
-        - copy_env_file_ubuntu1
+        - copy_env_file
 
-    - name: Create ansible_project directory
-      file:
-        path: /root/ansible_project
-        state: directory
+    - name: Import DataDog GPG key
+      shell: gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv 33EE313BAD9589B7
+      when: "'webservers' in group_names"
+      tags:
+        - import_datadog_gpg_key
 
-    - name: Copy .env file to ubuntu-2
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      when: "'webservers' in group_names"
+      tags:
+        - update_apt_cache
+
+    - name: Configure DataDog
+      include_role:
+        name: datadog.datadog
+      when: "'webservers' in group_names"
+      tags:
+         - configure_datadog
+
+    - name: Add DataDog repository
       copy:
-        src: /home/karpov/devops-for-programmers-project-76/templates/.env
-        dest: /root/ansible_project/.env
+        content: "deb https://apt.datadoghq.com/ stable main"
+        dest: "/etc/apt/sources.list.d/datadog.list"
         owner: root
         group: root
         mode: 0644
-      when: inventory_hostname == 'ubuntu-2'
+      when: "'webservers' in group_names"
       tags:
-        - copy_env_file_ubuntu2
+        - add_datadog_repository
+
+    - name: Install DataDog agent
+      apt:
+        name: datadog-agent
+        state: present
+      when: "'webservers' in group_names"
+      tags:
+        - install_datadog
+      vars:
+        datadog_api_key: "{{ datadog_api_key }}"
+
+    - name: Start DataDog agent
+      service:
+        name: datadog-agent
+        state: started
+      when: "'webservers' in group_names"
+      tags:
+        - start_datadog
+
+    - name: Install datadogpy
+      ansible.builtin.command:
+        cmd: pip install datadog
+      become: true
+      when: "'webservers' in group_names"
+      tags:
+        - install_datadogpy
+
+    - name: Configure http_check
+      datadog_monitor:
+        name: http_check
+        type: service check
+        api_key: "{{ datadog_api_key }}"
+        app_key: "{{ app_key }}"
+        query: "http://www.staceynik.store:80"
+        state: present
+        timeout_h: 3
+      when: "'webservers' in group_names"
+      tags:
+        - http_check_datadog
 
     - name: Configure Redmine environment
       lineinfile:
@@ -60,5 +114,3 @@
       when: inventory_hostname in groups['webservers']
       tags:
         - configure_redmine_environment
-
-
