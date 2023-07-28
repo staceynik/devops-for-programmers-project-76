@@ -5,3 +5,14 @@ redmine_env_variables:
   REDMINE_DB_PORT: "25060"
   REDMINE_DB_DATABASE: "defaultdb"
   REDMINE_DB_SSLMODE: "require"
+
+
+datadog_checks:
+  http_check:
+    init_config:
+    instances:
+      - name: Staceynik Store
+        url: http://www.staceynik.store:80
+        timeout: 10
+        method: GET
+        content_match: "Staceynik Store"

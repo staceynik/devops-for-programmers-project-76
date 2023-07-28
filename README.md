@@ -22,13 +22,13 @@ To get started with this project, make sure you have the following prerequisites
 Clone the repository to your local machine using the following command:
 [Clone the Repository](https://github.com/staceynik/devops-for-programmers-project-76.git)
 
-### Step 2: Install Dependencies
+### Step 2: Install Ansible Galaxy Roles
 
 Navigate to the project directory:
 
 ```cd devops-for-programmers-project-76```
 
-Install the required dependencies using the following command:
+Install the required roles from Ansible Galaxy using the following command:
 
 ```make requirements```
 
@@ -38,13 +38,7 @@ Create an inventory file named inventory.ini and add the necessary server hosts:
 
 ```nano inventory.ini```
 
-### Step 4: Install Ansible Galaxy Roles
-
-Install the required roles from Ansible Galaxy using the following command:
-
-```ansible-galaxy install -r requirements.yml```
-
-### Step 5: Deploy to Servers
+### Step 4: Deploy to Servers
 
 To prepare and deploy the project to the servers, run the following command:
 
