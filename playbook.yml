@@ -19,33 +19,6 @@
       tags:
         - install_docker
 
-#    - name: Create ansible_project directory
-#      file:
-#        path: /root/ansible_project
-#        state: directory
-
-    - name: Copy .env file to ansible_project directory
-      copy:
-        src: templates/.env
-        dest: /root/ansible_project/.env
-        owner: root
-        group: root
-        mode: 0644
-      when: inventory_hostname in groups['webservers']
-      tags:
-        - copy_env_file
-
-#    - name: Import DataDog GPG key
-#      shell: gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv 33EE313BAD9589B7
-#      when: "'webservers' in group_names"
-#      tags:
-#        - import_datadog_gpg_key
-
-    - name: Show datadog_checks variable
-      debug:
-        var: datadog_checks
-
-
     - name: Configure DataDog
       include_role:
         name: datadog.datadog
@@ -55,52 +28,8 @@
       tags:
         - configure_datadog
 
-
-#    - name: Install DataDog agent
-#      apt:
-#        name: datadog-agent
-#        state: present
-#      when: "'webservers' in group_names"
-#      tags:
-#        - install_datadog
-#      vars:
-#        datadog_api_key: "{{ datadog_api_key }}"
-
-#    - name: Start DataDog agent
-#      service:
-#        name: datadog-agent
-#        state: started
-#      when: "'webservers' in group_names"
-#      tags:
-#        - start_datadog
-#
-#    - name: Install datadogpy
-#      ansible.builtin.command:
-#        cmd: pip install datadog
-#      become: true
-#      when: "'webservers' in group_names"
-#      tags:
-#        - install_datadogpy
-
-#    - name: Configure http_check
-#      datadog_monitor:
-#        name: http_check
-#        type: service check
-#        api_key: "{{ datadog_api_key }}"
-#        app_key: "{{ app_key }}"
-#        query: "http://www.staceynik.store:80"
-#        state: present
-#        timeout_h: 3
-#      when: "'webservers' in group_names"
-#      tags:
-#        - http_check_datadog
-
-#    - name: Configure Redmine environment
-#      lineinfile:
-#        path: /root/ansible_project/.env
-#        line: "{{ item.key }}={{ item.value }}"
-#        state: present
-#      with_dict: "{{ redmine_env_variables }}"
-#      when: inventory_hostname in groups['webservers']
-#      tags:
-#        - configure_redmine_environment
+    - name: Deploy Redmine
+      include_role:
+        name: deploy_redmine
+      tags:
+        - deploy_redmine

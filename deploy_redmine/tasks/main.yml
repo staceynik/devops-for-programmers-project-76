@@ -1,0 +1,43 @@
+---
+- name: Install docker Python library
+  pip:
+    name: docker
+    state: present
+  become: true
+
+- name: Load vault variables
+  include_vars:
+    file: ../../group_vars/webservers/vault.yml
+    name: vault_vars
+
+- name: Create .env file from template
+  template:
+    src: deploy_redmine/templates/.env.j2
+    dest: /root/ansible_project/.env
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+
+- name: Pull Redmine Docker image
+  docker_image:
+    name: redmine:latest
+  become: true
+
+- name: Create Redmine data volume
+  docker_volume:
+    name: redmine_data
+  become: true
+
+- name: Run Redmine container
+  docker_container:
+    name: redmine
+    image: redmine:latest
+    env_file: /root/ansible_project/.env
+    volumes:
+      - redmine_data:/usr/src/redmine/files
+    ports:
+      - "3000:3000"
+    restart_policy: always
+  become: true
+

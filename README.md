@@ -5,6 +5,7 @@
 
 ## Description
 
+This project demonstrates how to use Ansible to deploy Docker images and manage the deployment of a Redmine application.
 
 ## Prerequisites
 
@@ -53,8 +54,4 @@ You can find the deployed application at the following link:
 ## License
 
 This project is licensed under the MIT License.
-
-
-
-
 
