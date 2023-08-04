@@ -1,5 +1,5 @@
 deploy:
-	ANSIBLE_VAULT_PASSWORD_FILE=/home/karpov/devops-for-programmers-project-76/vault_password.txt ansible-playbook -i inventory.ini playbook.yml
+	ANSIBLE_VAULT_PASSWORD_FILE=$(CURDIR)/vault_password.txt ansible-playbook -i inventory.ini playbook.yml
 requirements:
 	ansible-galaxy install -r requirements.yml --force
 

@@ -2,9 +2,6 @@
   hosts: all
   become: true
 
-  vars_files:
-    - group_vars/webservers/vars.yml
-
   tasks:
     - name: Install pip
       import_role:
@@ -22,13 +19,12 @@
       include_role:
         name: datadog.datadog
       when: "'webservers' in group_names"
-      vars:
-        agent_datadog_checks: "{{ datadog_checks }}"
       tags:
         - configure_datadog
 
     - name: Deploy Redmine
       include_role:
         name: deploy_redmine
+      when: "'webservers' in group_names"
       tags:
         - deploy_redmine
