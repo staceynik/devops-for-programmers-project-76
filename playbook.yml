@@ -3,7 +3,6 @@
   become: true
 
   vars_files:
-    - group_vars/webservers/vault.yml
     - group_vars/webservers/vars.yml
 
   tasks:

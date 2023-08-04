@@ -1,2 +1,1 @@
-deploy_redmine/templates/.env.j2
 vault_password.txt
