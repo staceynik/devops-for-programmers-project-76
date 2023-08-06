@@ -1,4 +1,3 @@
 agent_datadog_checks: "{{ datadog_checks }}"
 ansible_user: root
-docker_service_manage: true
 
