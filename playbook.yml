@@ -12,7 +12,7 @@
     - name: Install Docker module for pip
       import_role:
         name: geerlingguy.docker
-      when: docker_service_manage
+      when: docker_service_manage | default(false)
       tags:
         - install_docker
 
