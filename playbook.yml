@@ -10,18 +10,6 @@
       tags:
         - install_pip
 
-- name: Prepare Python and Install Docker
-  hosts: all
-  become: true
-  tags:
-    - install_pip
-
-- name: Install Docker on webservers
-  hosts: webservers
-  become: true
-  tags:
-    - install_docker
-
 - name: Configure datadog on webservers
   hosts: webservers
   become: true
@@ -36,9 +24,4 @@
   hosts: webservers
   become: true
   tags:
-    - deploy_redmine
-  roles:
-    - geerlingguy.pip
-    - geerlingguy.docker
-    - datadog.datadog
     - deploy_redmine
