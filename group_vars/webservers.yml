@@ -1,3 +1,0 @@
-agent_datadog_checks: "{{ datadog_checks }}"
-ansible_user: root
-
