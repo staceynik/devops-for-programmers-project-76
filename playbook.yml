@@ -4,46 +4,42 @@
 
   tasks:
     - name: Install pip
-      import_role:
-        name: geerlingguy.pip
+      pip:
+        name: requests
+        state: present
       tags:
         - install_pip
 
 - name: Prepare Python and Install Docker
   hosts: all
   become: true
-
-  roles:
-    - geerlingguy.pip
   tags:
     - install_pip
 
 - name: Install Docker on webservers
   hosts: webservers
   become: true
-  roles:
-    - geerlingguy.docker
   tags:
     - install_docker
 
 - name: Configure datadog on webservers
   hosts: webservers
   become: true
-
   tasks:
     - name: Install datadog agent
       import_role:
         name: datadog.datadog
-      vars:
-        agent_datadog_checks: "{{ datadog_checks }}"
       tags:
         - configure_datadog
 
 - name: Deploy Redmine on webservers
   hosts: webservers
   become: true
-
-  roles:
-    - deploy_redmine
   tags:
     - deploy_redmine
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker
+    - datadog.datadog
+    - deploy_redmine
+

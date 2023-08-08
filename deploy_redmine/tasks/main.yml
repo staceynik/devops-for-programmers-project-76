@@ -1,4 +1,13 @@
 ---
+- name: Ensure /root/ansible_project directory exists
+  file:
+    path: /root/ansible_project
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
 - name: Install docker Python library
   pip:
     name: docker
@@ -41,4 +50,3 @@
     restart_policy: always
   become: true
   when: "'webservers' in group_names"
-
