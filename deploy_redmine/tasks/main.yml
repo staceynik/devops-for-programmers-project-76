@@ -1,4 +1,13 @@
 ---
+- name: Ensure /root/ansible_project directory exists
+  file:
+    path: /root/ansible_project
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
 - name: Install docker Python library
   pip:
     name: docker
@@ -32,13 +41,12 @@
 - name: Run Redmine container
   docker_container:
     name: redmine
-    image: redmine:latest
+    image: "redmine:{{ redmine_version }}"
     env_file: /root/ansible_project/.env
     volumes:
       - redmine_data:/usr/src/redmine/files
     ports:
-      - "3000:3000"
+      - "{{ redmine_external_port }}:3000"
     restart_policy: always
   become: true
   when: "'webservers' in group_names"
-
