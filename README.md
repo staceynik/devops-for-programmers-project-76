@@ -15,13 +15,14 @@ To get started with this project, make sure you have the following prerequisites
 - [Pipinstallation](https://pip.pypa.io/en/stable/installing/) 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Make](https://www.gnu.org/software/make/)
+- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
 ## Installation and Deployment
 
 ### Step 1: Clone the Repository
 
 Clone the repository to your local machine using the following command:
-[Clone the Repository](https://github.com/staceynik/devops-for-programmers-project-76.git)
+```git clone https://github.com/staceynik/devops-for-programmers-project-76.git```
 
 ### Step 2: Install Ansible Galaxy Roles
 
@@ -50,6 +51,10 @@ To prepare and deploy the project to the servers, run the following command:
 You can find the deployed application at the following link:
 
 - [Redmine](http://www.staceynik.store/)
+
+You can also run specific tasks using tags by utilizing the Makefile commands. For example, to only update repositories cache, you can run:
+
+```make update_cache```
 
 ## License
 
