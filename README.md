@@ -17,6 +17,34 @@ To get started with this project, make sure you have the following prerequisites
 - [Make](https://www.gnu.org/software/make/)
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 
+## Configuration
+
+### Ansible Roles and Templates
+
+This project utilizes Ansible roles to deploy applications and manage configurations. The roles include:
+
+- **datadog.datadog**: This role manages the integration with Datadog. You will need to set the required environment variables and keys for this role to function properly.
+
+For integrating with Datadog, you need to set the required environment variables and keys. This project uses Ansible Vault to securely manage sensitive information. Here's how you can manage these variables:
+
+1. Create a file named `vault.yml` in the directory `/home/karpov/devops-for-programmers-project-76/group_vars/webservers`.
+2. Store your sensitive variables in this file. For example:
+
+```yaml
+vault_vars:
+  datadog_api_key: "your-datadog-api-key"
+  app_key: "your-app-key"
+```
+- **deploy_redmine**: This role is responsible for deploying the Redmine application. The templates for this role can be found in the directory `/roles/deploy_redmine/templates`.
+
+  To securely manage sensitive information related to the Redmine deployment, you can add the required data to the `vault.yml` file. Here's an example of how to include these variables in the `vault.yml` file for the `deploy_redmine` role:
+
+  ```yaml
+redmine_env_variables:
+  REDMINE_DB_USERNAME: "your-db-username"
+  REDMINE_DB_PASSWORD: "your-db-password"
+```
+
 ## Installation and Deployment
 
 ### Step 1: Clone the Repository
