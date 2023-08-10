@@ -39,7 +39,7 @@ vault_vars:
 
   To securely manage sensitive information related to the Redmine deployment, you can add the required data to the `vault.yml` file. Here's an example of how to include these variables in the `vault.yml` file for the `deploy_redmine` role:
 
-  ```yaml
+```yaml
 redmine_env_variables:
   REDMINE_DB_USERNAME: "your-db-username"
   REDMINE_DB_PASSWORD: "your-db-password"
