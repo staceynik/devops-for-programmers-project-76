@@ -26,7 +26,7 @@
 - name: Pull Redmine Docker image
   docker_image:
     source: pull
-    name: redmine:latest
+    name: "redmine:{{ redmine_version }}"
   become: true
 
 - name: Create Redmine data volume
@@ -45,4 +45,3 @@
       - "{{ redmine_external_port }}:3000"
     restart_policy: always
   become: true
-  when: "'webservers' in group_names"

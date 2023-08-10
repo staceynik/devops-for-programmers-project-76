@@ -27,7 +27,7 @@ This project utilizes Ansible roles to deploy applications and manage configurat
 
 For integrating with Datadog, you need to set the required environment variables and keys. This project uses Ansible Vault to securely manage sensitive information. Here's how you can manage these variables:
 
-1. Create a file named `vault.yml` in the directory `/home/karpov/devops-for-programmers-project-76/group_vars/webservers`.
+1. Create a file named `vault.yml` in the directory `~/devops-for-programmers-project-76/group_vars/webservers`.
 2. Store your sensitive variables in this file. For example:
 
 ```yaml

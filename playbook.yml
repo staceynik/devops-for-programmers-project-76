@@ -2,8 +2,6 @@
   hosts: all
   become: true
 
-  tasks:
-
 - name: Prepare Python and Install Docker
   hosts: all
   become: true
@@ -20,14 +18,6 @@
       tags:
         - install_pip
 
-- name: Prepare Python and Install Docker
-  hosts: all
-  become: true
-  roles:
-    - geerlingguy.pip
-  tags:
-    - install_pip
-
 - name: Install Docker on webservers
   hosts: webservers
   become: true
@@ -43,6 +33,9 @@
     - datadog.datadog
   tags:
     - configure_datadog
+  vars:
+    datadog_api_key: "{{ vault_vars.datadog_api_key }}"
+    app_key: "{{ vault_vars.app_key }}"
 
 - name: Deploy Redmine on webservers
   hosts: webservers
