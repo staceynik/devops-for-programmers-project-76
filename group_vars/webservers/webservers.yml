@@ -14,3 +14,5 @@ datadog_checks:
 
 redmine_version: latest
 redmine_external_port: 3000
+datadog_api_key: "{{ vault_vars.datadog_api_key }}"
+app_key: "{{ vault_vars.app_key }}"

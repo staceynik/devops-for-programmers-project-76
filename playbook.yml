@@ -33,9 +33,6 @@
     - datadog.datadog
   tags:
     - configure_datadog
-  vars:
-    datadog_api_key: "{{ vault_vars.datadog_api_key }}"
-    app_key: "{{ vault_vars.app_key }}"
 
 - name: Deploy Redmine on webservers
   hosts: webservers
