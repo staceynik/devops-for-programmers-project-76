@@ -8,9 +8,9 @@
     mode: 0755
   become: true
 
-- name: Install docker Python library
-  pip:
-    name: docker
+- name: Install docker Python library via APT
+  apt:
+    name: python3-docker
     state: present
   become: true
 
